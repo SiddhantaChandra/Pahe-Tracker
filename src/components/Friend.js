@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Friend({ name, money, img, style }) {
+function Friend({ id, name, money, img, style, handleShowCalculator }) {
   return (
     <div className={style}>
       <div className="flex gap-4 items-center">
@@ -26,7 +26,10 @@ function Friend({ name, money, img, style }) {
           )}
         </div>
       </div>
-      <button className="bg-[#5862b5] px-6 py-2 rounded-sm hover:bg-[#404783]">
+      <button
+        className="bg-[#5862b5] px-6 py-2 rounded-sm hover:bg-[#404783]"
+        onClick={() => handleShowCalculator(id)}
+      >
         Select
       </button>
     </div>
