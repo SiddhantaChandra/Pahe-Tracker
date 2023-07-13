@@ -1,21 +1,62 @@
 import React, { useState } from 'react';
 
-function Calculator({ friends, curID }) {
-  var name, img;
+function Calculator({ friends, curID, updateAddedFriends }) {
+  var name, img, balance;
   const [bill, setBill] = useState('');
   const [yourExpense, setYourExpense] = useState('');
   const [friendsExpense, setFriendsExpense] = useState('');
   const [paying, setPaying] = useState('You');
+  const [showReset, setShowReset] = useState(false);
+
   friends.forEach((friend) => {
     if (friend.ID === curID) {
       name = friend.friendsName;
       img = friend.friendsImg;
+      balance = friend.balance;
     }
   });
 
   function handleUpdateAdded(e) {
     e.preventDefault();
+    const addBalance = Number(friendsExpense);
+    if (paying === 'You' && balance < 0) {
+      balance = balance - addBalance;
+    }
+    if (paying === 'You' && balance > 0) {
+      balance = balance - addBalance;
+    }
+    if (paying === 'You' && balance === 0) {
+      balance = balance - addBalance;
+    }
+    if (paying !== 'You' && balance < 0) {
+      balance = balance + Number(yourExpense);
+    }
+    if (paying !== 'You' && balance > 0) {
+      balance = balance + Number(yourExpense);
+    }
+    if (paying !== 'You' && balance === 0) {
+      balance = balance + Number(yourExpense);
+    }
+    const changeObject = {
+      id: curID,
+      balance: balance,
+    };
+
+    updateAddedFriends(changeObject);
+
+    setBill('');
+    setYourExpense('');
+    setFriendsExpense('');
+    setPaying('You');
   }
+
+  const resetFields = () => {
+    setBill('');
+    setYourExpense('');
+    setFriendsExpense('');
+    setPaying('You');
+    setShowReset(false);
+  };
   // console.log(friends);
   return (
     //bill value, your expense, anthony expense, Who's paying the bill
@@ -23,7 +64,7 @@ function Calculator({ friends, curID }) {
       <div className="flex items-center gap-4">
         <img src={img} alt={name} className="w-16 h-16 rounded-full" />
         <div>
-          <h2 className="text-xl font-bold">{name}</h2>
+          <h2 className="text-xl font-bold bg-[#232627]">{name}</h2>
           <p className="text-sm">Added on: DATE</p>
         </div>
       </div>
@@ -37,6 +78,7 @@ function Calculator({ friends, curID }) {
               value={bill}
               onChange={(e) => {
                 setBill(e.target.value);
+                setShowReset(true);
               }}
               type="number"
             />
@@ -47,6 +89,7 @@ function Calculator({ friends, curID }) {
               className="bg-[#3b3b3b] px-2 py-1 w-28 rounded-sm"
               value={yourExpense}
               onChange={(e) => {
+                setShowReset(true);
                 setYourExpense(e.target.value);
                 const expense = Number(e.target.value) - Number(bill);
                 setFriendsExpense(Math.abs(expense));
@@ -67,6 +110,7 @@ function Calculator({ friends, curID }) {
               className="bg-[#3b3b3b] px-2 py-1 w-28 rounded-sm"
               value={paying}
               onChange={(e) => {
+                setShowReset(true);
                 setPaying(e.target.value);
               }}
             >
@@ -74,9 +118,21 @@ function Calculator({ friends, curID }) {
               <option>{name}</option>
             </select>
           </div>
-          <button className="bg-[#5862b5] px-6 py-2 rounded-sm hover:bg-[#404783] w-28 self-end">
-            Update
-          </button>
+          <div className="flex self-end gap-6">
+            {showReset === false ? (
+              ''
+            ) : (
+              <button
+                className="bg-[#5862b5] px-6 py-2 rounded-sm hover:bg-[#404783] w-28 "
+                onClick={resetFields}
+              >
+                Reset &#8634;
+              </button>
+            )}
+            <button className="bg-[#5862b5] px-6 py-2 rounded-sm hover:bg-[#404783] w-28">
+              Update
+            </button>
+          </div>
         </form>
       </div>
     </div>

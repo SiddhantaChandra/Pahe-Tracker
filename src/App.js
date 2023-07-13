@@ -47,8 +47,9 @@ function App() {
 
   const updateFriends = (friend) => {
     setFriends((friends) => [...friends, friend]);
-    console.log(friends);
   };
+
+  const updateAddedFriends = (friend) => {};
 
   const handleShowAddFriends = (e) => {
     setShowAddFriends(!showAddFriends);
@@ -121,7 +122,11 @@ function App() {
           {!showCalculator ? (
             ''
           ) : (
-            <Calculator friends={friends} curID={curID} />
+            <Calculator
+              friends={friends}
+              curID={curID}
+              updateAddedFriends={updateAddedFriends}
+            />
           )}
 
           <Dashboard debt={positiveBalanceSum} dues={negetiveBalanceSum} />
