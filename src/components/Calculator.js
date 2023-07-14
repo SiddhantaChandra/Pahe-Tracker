@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 function Calculator({ friends, curID, updateAddedFriends }) {
-  var name, img, balance;
+  var name, img;
   const [bill, setBill] = useState('');
   const [yourExpense, setYourExpense] = useState('');
   const [friendsExpense, setFriendsExpense] = useState('');
@@ -12,34 +12,17 @@ function Calculator({ friends, curID, updateAddedFriends }) {
     if (friend.ID === curID) {
       name = friend.friendsName;
       img = friend.friendsImg;
-      balance = friend.balance;
     }
   });
 
   function handleUpdateAdded(e) {
     e.preventDefault();
-    const addBalance = Number(friendsExpense);
-    if (paying === 'You' && balance < 0) {
-      balance = balance - addBalance;
-    }
-    if (paying === 'You' && balance > 0) {
-      balance = balance - addBalance;
-    }
-    if (paying === 'You' && balance === 0) {
-      balance = balance - addBalance;
-    }
-    if (paying !== 'You' && balance < 0) {
-      balance = balance + Number(yourExpense);
-    }
-    if (paying !== 'You' && balance > 0) {
-      balance = balance + Number(yourExpense);
-    }
-    if (paying !== 'You' && balance === 0) {
-      balance = balance + Number(yourExpense);
-    }
+
     const changeObject = {
       id: curID,
-      balance: balance,
+      friendBalance: friendsExpense,
+      yourBalance: yourExpense,
+      paying: paying,
     };
 
     updateAddedFriends(changeObject);

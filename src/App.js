@@ -25,18 +25,6 @@ const initialFriends = [
     balance: 0,
     friendsImg: 'https://i.pravatar.cc/120?img=67',
   },
-  {
-    ID: 4,
-    friendsName: 'Lexie',
-    balance: 22,
-    friendsImg: 'https://i.pravatar.cc/120?img=11',
-  },
-  {
-    ID: 5,
-    friendsName: 'Leie',
-    balance: -52,
-    friendsImg: 'https://i.pravatar.cc/120?img=11',
-  },
 ];
 
 function App() {
@@ -49,7 +37,28 @@ function App() {
     setFriends((friends) => [...friends, friend]);
   };
 
-  const updateAddedFriends = (friend) => {};
+  const updateAddedFriends = (update) => {
+    console.log(update.balance);
+    setFriends((friends) =>
+      friends.map((friend) => {
+        if (friend.ID === update.id) {
+          if (update.paying === 'You') {
+            return {
+              ...friend,
+              balance: friend.balance - Number(update.friendBalance),
+            };
+          } else if (update.paying !== 'You') {
+            return {
+              ...friend,
+              balance: friend.balance + Number(update.yourBalance),
+            };
+          }
+        }
+        return friend;
+      }),
+    );
+    console.log(friends);
+  };
 
   const handleShowAddFriends = (e) => {
     setShowAddFriends(!showAddFriends);
@@ -71,14 +80,14 @@ function App() {
     }
   };
 
-  const positiveBalanceSum = initialFriends.reduce((sum, friend) => {
+  const positiveBalanceSum = friends.reduce((sum, friend) => {
     if (friend.balance >= 0) {
       return sum + friend.balance;
     }
     return sum;
   }, 0);
 
-  const negetiveBalanceSum = initialFriends.reduce((sum, friend) => {
+  const negetiveBalanceSum = friends.reduce((sum, friend) => {
     if (friend.balance < 0) {
       return sum - friend.balance;
     }
