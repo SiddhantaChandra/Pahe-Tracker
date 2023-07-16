@@ -5,7 +5,6 @@ import Calculator from './components/Calculator';
 import Dashboard from './components/Dashboard';
 import Friends from './components/Friends';
 
-import nunu from './photos/soumadu.jpg';
 const initialFriends = [
   {
     ID: 1,
@@ -97,7 +96,6 @@ function App() {
   return (
     <div className="App flex flex-col items-center gap-8">
       <div className="flex items-center gap-8 pt-8">
-        <img src={nunu} alt="nunu" className="w-24 rounded-full" />
         <h1 className="text-4xl font-bold">Pahe 💸 Tracker</h1>
       </div>
       <div className="flex justify-center pt-8 gap-8">
