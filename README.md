@@ -1,5 +1,3 @@
-Certainly! Here's an updated version of the documentation with the "WIP/Future Additions" section:
-
 # Pahe 💸 Tracker Documentation
 
 ## Introduction
